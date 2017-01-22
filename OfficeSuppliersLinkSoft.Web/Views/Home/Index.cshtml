@@ -1,0 +1,22 @@
+﻿@model IEnumerable<OfficeSuppliersLinkSoft.Web.Models.GroupViewModel>
+
+@{
+    ViewBag.Title = "Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p></p>
+
+<div class="container">
+    <div class="jumbotron">
+        @foreach (var group in Model)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @*@Html.DisplayFor(modelItem => group.Name)*@
+                    @Html.ActionLink("View all" + group.Name, "Index", new { category = group.Name }, new { @class = "pull-right" });
+                </div>
+            </div>
+        }
+    </div>
+</div>
