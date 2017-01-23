@@ -66,7 +66,7 @@ namespace OfficeSuppliersLinkSoft.Data.Infrastructure
         /// Mark as remove some entity from context
         /// </summary>
         /// <param name="entity">T entity</param>
-        public virtual void Delete(T entity) => _dbSet.Remove(entity);
+        public virtual void Delete(T entity) => _dataContext.Entry(entity).State = EntityState.Deleted;
         
         /// <summary>
         /// Mark as remove som entity or entities based on Linq expression

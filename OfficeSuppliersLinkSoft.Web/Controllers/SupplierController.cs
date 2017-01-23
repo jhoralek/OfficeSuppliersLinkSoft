@@ -118,9 +118,8 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         // POST: Supplier/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed([Bind(Include = "SupplierId")] SupplierViewModel supplierViewModel)
         {
-            var supplierViewModel = ToViewModel(_supplierService.GetSupplier(id));
             _supplierService.RemoveSupplier(ToDomain(supplierViewModel));
             _supplierService.SaveSupplier();
 

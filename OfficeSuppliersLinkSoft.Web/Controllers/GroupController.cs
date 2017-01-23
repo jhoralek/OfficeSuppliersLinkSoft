@@ -117,9 +117,8 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         // POST: Group/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed([Bind(Include = "GroupId")] GroupViewModel groupViewModel)
         {
-            var groupViewModel = ToViewModel(_groupService.GetGroup(id));
             _groupService.RemoveGroup(ToDomain(groupViewModel));
             _groupService.SaveGroup();
             
@@ -132,7 +131,7 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         /// <param name="disposing">it is time to dispose true/false</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _groupService.Dispose();            
+            if (disposing) _groupService.Dispose();
             base.Dispose(disposing);
         }
 
@@ -158,7 +157,6 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         /// </summary>
         /// <param name="gvm">GroupViewModel object</param>
         /// <returns>Group object</returns>
-        Group ToDomain(GroupViewModel gvm) => Mapper.Map<GroupViewModel, Group>(gvm);
-        
+        Group ToDomain(GroupViewModel gvm) => Mapper.Map<GroupViewModel, Group>(gvm);        
     }
 }
