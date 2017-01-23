@@ -5,6 +5,7 @@ using OfficeSuppliersLinkSoft.Web.Models;
 using OfficeSuppliersLinkSoft.Service;
 using OfficeSuppliersLinkSoft.Model;
 using AutoMapper;
+using OfficeSuppliersLinkSoft.Web.Mappings;
 
 namespace OfficeSuppliersLinkSoft.Web.Controllers
 {
@@ -35,15 +36,17 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Supplier
-        public ActionResult Index() => View(ListToViewModel(_supplierService.GetSuppliers()));
+        [AutoMap(typeof(IEnumerable<Supplier>), typeof(IEnumerable<SupplierViewModel>))]
+        public ActionResult Index() => View(_supplierService.GetSuppliers());
 
         // GET: Supplier/Details/5
+        [AutoMap(typeof(Supplier), typeof(SupplierViewModel))]
         public ActionResult Details(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var supplierViewModel = ToViewModel(_supplierService.GetSupplier(id.Value));
+            var supplierViewModel = _supplierService.GetSupplier(id.Value);
             if (supplierViewModel == null)
                 return HttpNotFound();
                         
@@ -72,13 +75,14 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Supplier/Edit/5
+        [AutoMap(typeof(Supplier), typeof(SupplierViewModel))]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var supplierViewModel = ToViewModel(_supplierService.GetSupplier(id.Value));
+            var supplierViewModel = _supplierService.GetSupplier(id.Value);
             if (supplierViewModel == null)
                 return HttpNotFound();
 
@@ -103,12 +107,13 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Supplier/Delete/5
+        [AutoMap(typeof(Supplier), typeof(SupplierViewModel))]
         public ActionResult Delete(int? id)
         {
             if (id == null)            
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var supplierViewModel = ToViewModel(_supplierService.GetSupplier(id.Value));
+            var supplierViewModel = _supplierService.GetSupplier(id.Value);
             if (supplierViewModel == null)            
                 return HttpNotFound();
             
@@ -135,23 +140,6 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
             if (disposing) _supplierService.Dispose();
             base.Dispose(disposing);
         }
-
-        /// <summary>
-        /// Self explanation method helps to map collection of Supplier to 
-        /// SupplierViewModel collection
-        /// Reusable it shorts the code in controller
-        /// </summary>
-        /// <param name="list">list of Supplier</param>
-        /// <returns>list of SupplierViewModel</returns>
-        IEnumerable<SupplierViewModel> ListToViewModel(IEnumerable<Supplier> list)
-            => Mapper.Map<IEnumerable<Supplier>, IEnumerable<SupplierViewModel>>(list);
-
-        /// <summary>
-        /// Maps Supplier object to SupplierViewModel object
-        /// </summary>
-        /// <param name="g">Supplier object</param>
-        /// <returns>SupplierViewModel object</returns>
-        SupplierViewModel ToViewModel(Supplier g) => Mapper.Map<Supplier, SupplierViewModel>(g);
 
         /// <summary>
         /// Maps SupplierViewModel to SupplierView

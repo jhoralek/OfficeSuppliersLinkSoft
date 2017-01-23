@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OfficeSuppliersLinkSoft.Model;
 using OfficeSuppliersLinkSoft.Service;
+using OfficeSuppliersLinkSoft.Web.Mappings;
 using OfficeSuppliersLinkSoft.Web.Models;
 using System.Collections.Generic;
 using System.Net;
@@ -25,25 +26,33 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         readonly IGroupService _groupService;
 
         /// <summary>
+        /// Interface to the supplierService
+        /// </summary>
+        readonly ISupplierService _supplierService;
+
+        /// <summary>
         /// Initialize GrupController instance fo every request
         /// Dependency injection fo GroupService
         /// </summary>
         /// <param name="groupService">Instance of GroupService</param>
-        public GroupController(IGroupService groupService)
+        public GroupController(IGroupService groupService, ISupplierService supplierService)
         {
             _groupService = groupService;
+            _supplierService = supplierService;
         }
 
         // GET: Group
-        public ActionResult Index() => View(ListToViewModel(_groupService.GetGroups()));
+        [AutoMap(typeof(IEnumerable<Group>), typeof(IEnumerable<GroupViewModel>))]
+        public ActionResult Index() => View(_groupService.GetGroups());
         
         // GET: Group/Details/5
+        [AutoMap(typeof(Group), typeof(GroupViewModel))]
         public ActionResult Details(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);            
 
-            var groupViewModel = ToViewModel(_groupService.GetGroup(id.Value));
+            var groupViewModel = _groupService.GetGroup(id.Value);
             if (groupViewModel == null)
                 return HttpNotFound();
 
@@ -51,18 +60,27 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Group/Create
-        public ActionResult Create() => View();        
+        public ActionResult Create()
+        {
+            // we need to push list of suppliers to the view
+            // there will be process to select what supplies belongs
+            // to new group
+
+
+            return View();
+        }
 
         // POST: Group/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AutoMap(typeof(GroupViewModel), typeof(Group))]
         public ActionResult Create([Bind(Include = "GroupId,Name")] GroupViewModel groupViewModel)
         {
             if (ModelState.IsValid)
             {
-                _groupService.CreateGroup(ToDomain(groupViewModel));
+                _groupService.CreateGroup(GroupToDomain(groupViewModel));
                 _groupService.SaveGroup();
                
                 return RedirectToAction("Index");
@@ -72,12 +90,13 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Group/Edit/5
+        [AutoMap(typeof(Group), typeof(GroupViewModel))]
         public ActionResult Edit(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var groupViewModel = ToViewModel(_groupService.GetGroup(id.Value));
+            var groupViewModel = _groupService.GetGroup(id.Value);
             if (groupViewModel == null)
                 return HttpNotFound();
 
@@ -93,7 +112,7 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _groupService.UpdateGroup(ToDomain(groupViewModel));
+                _groupService.UpdateGroup(GroupToDomain(groupViewModel));
                 _groupService.SaveGroup();
                 
                 return RedirectToAction("Index");
@@ -102,12 +121,13 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Group/Delete/5
+        [AutoMap(typeof(Group), typeof(GroupViewModel))]
         public ActionResult Delete(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var groupViewModel = ToViewModel(_groupService.GetGroup(id.Value));
+            var groupViewModel = _groupService.GetGroup(id.Value);
             if (groupViewModel == null)
                 return HttpNotFound();
 
@@ -119,7 +139,7 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed([Bind(Include = "GroupId")] GroupViewModel groupViewModel)
         {
-            _groupService.RemoveGroup(ToDomain(groupViewModel));
+            _groupService.RemoveGroup(GroupToDomain(groupViewModel));
             _groupService.SaveGroup();
             
             return RedirectToAction("Index");
@@ -136,27 +156,10 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         /// <summary>
-        /// Self explanation method helps to map collection of Group to 
-        /// GroupViewModel collection
-        /// Reusable it shorts the code in controller
-        /// </summary>
-        /// <param name="list">list of Group</param>
-        /// <returns>list of GroupViewModel</returns>
-        IEnumerable<GroupViewModel> ListToViewModel(IEnumerable<Group> list) 
-            => Mapper.Map<IEnumerable<Group>, IEnumerable<GroupViewModel>>(list);
-
-        /// <summary>
-        /// Maps Group object to GroupViewModel object
-        /// </summary>
-        /// <param name="g">Group object</param>
-        /// <returns>GroupViewModel object</returns>
-        GroupViewModel ToViewModel(Group g) => Mapper.Map<Group, GroupViewModel>(g);
-
-        /// <summary>
         /// Maps GroupViewModel to GroupView
         /// </summary>
         /// <param name="gvm">GroupViewModel object</param>
         /// <returns>Group object</returns>
-        Group ToDomain(GroupViewModel gvm) => Mapper.Map<GroupViewModel, Group>(gvm);        
+        Group GroupToDomain(GroupViewModel gvm) => Mapper.Map<GroupViewModel, Group>(gvm);        
     }
 }
