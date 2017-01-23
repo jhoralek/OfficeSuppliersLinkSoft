@@ -26,19 +26,13 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         readonly IGroupService _groupService;
 
         /// <summary>
-        /// Interface to the supplierService
-        /// </summary>
-        readonly ISupplierService _supplierService;
-
-        /// <summary>
         /// Initialize GrupController instance fo every request
         /// Dependency injection fo GroupService
         /// </summary>
         /// <param name="groupService">Instance of GroupService</param>
-        public GroupController(IGroupService groupService, ISupplierService supplierService)
+        public GroupController(IGroupService groupService)
         {
             _groupService = groupService;
-            _supplierService = supplierService;
         }
 
         // GET: Group
@@ -60,23 +54,16 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Group/Create
-        public ActionResult Create()
-        {
-            // we need to push list of suppliers to the view
-            // there will be process to select what supplies belongs
-            // to new group
-
-
-            return View();
-        }
-
+        [AutoMap(typeof(Group), typeof(GroupViewModel))]
+        public ActionResult Create() => View();
+        
         // POST: Group/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AutoMap(typeof(GroupViewModel), typeof(Group))]
-        public ActionResult Create([Bind(Include = "GroupId,Name")] GroupViewModel groupViewModel)
+        public ActionResult Create([Bind(Include = "GroupId,Name, Suppliers")] GroupViewModel groupViewModel)
         {
             if (ModelState.IsValid)
             {

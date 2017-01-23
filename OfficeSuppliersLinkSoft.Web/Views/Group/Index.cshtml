@@ -4,7 +4,7 @@
     ViewBag.Title = "Groups";
 }
 
-<h2>Index</h2>
+<h2>Group list</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -16,6 +16,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
+                <th>
+                    Supplies
+                </th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -25,6 +28,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Suppliers.Count)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.GroupId }) |

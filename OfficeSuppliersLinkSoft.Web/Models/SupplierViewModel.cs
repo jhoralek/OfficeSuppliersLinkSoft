@@ -55,6 +55,6 @@ namespace OfficeSuppliersLinkSoft.Web.Models
         /// <summary>
         /// Supplier's groups collection
         /// </summary>        
-        public virtual ICollection<GroupViewModel> SuppliersGroups { get; set; }
+        public virtual ICollection<GroupViewModel> Groups { get; set; }
     }
 }

@@ -28,6 +28,6 @@ namespace OfficeSuppliersLinkSoft.Web.Models
         /// <summary>
         /// Supplier groups collection
         /// </summary>
-        public virtual ICollection<SupplierViewModel> SuppliersGroups { get; set; }
+        public virtual ICollection<SupplierViewModel> Suppliers { get; set; }
     }
 }

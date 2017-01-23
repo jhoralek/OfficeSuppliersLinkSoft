@@ -17,7 +17,12 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.Suppliers)
+        </dt>            
+        <dd>
+            @Html.DisplayFor(model => model.Suppliers, "SupplierViewModel")
+        </dd>
     </dl>
 </div>
 <p>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<OfficeSuppliersLinkSoft.Web.Models.SupplierViewModel>
+
+<div class="table-responsive">
+    <table class="table table-responsive table-hover table-condensed">
+        <thead class="thead-inverse">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Address)</th>
+                <th>@Html.DisplayNameFor(model => model.EmailAddress)</th>
+                <th>@Html.DisplayNameFor(model => model.Telephone)</th>
+                <th>@Html.DisplayNameFor(model => model.Groups)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var supplier in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(item => supplier.Name)</td>
+                    <td>@Html.DisplayFor(item => supplier.Address)</td>
+                    <td>@Html.DisplayFor(item => supplier.EmailAddress)</td>
+                    <td>@Html.DisplayFor(item => supplier.Telephone)</td>
+                    <td>@Html.DisplayFor(item => supplier.Groups.Count)</td>
+                </tr>
+            }
+        </tbody>
+    </table> 
+</div>

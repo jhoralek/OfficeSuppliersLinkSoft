@@ -41,7 +41,12 @@
         <dd>
             @Html.DisplayFor(model => model.Telephone)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.Groups)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Groups, "GroupViewModel")
+        </dd>
     </dl>
 </div>
 <p>

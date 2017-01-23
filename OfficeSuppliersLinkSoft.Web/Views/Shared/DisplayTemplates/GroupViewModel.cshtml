@@ -1,0 +1,19 @@
+﻿@model IEnumerable<OfficeSuppliersLinkSoft.Web.Models.GroupViewModel>
+
+<div class="table-responsive">
+    <table class="table table-responsive table-hover table-condensed">
+        <thead class="thead-inverse">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var supplier in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(item => supplier.Name)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

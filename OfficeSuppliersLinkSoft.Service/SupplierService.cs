@@ -3,12 +3,14 @@ using OfficeSuppliersLinkSoft.Data.Repositories;
 using OfficeSuppliersLinkSoft.Model;
 using System.Collections.Generic;
 using System;
+using System.Linq.Expressions;
 
 namespace OfficeSuppliersLinkSoft.Service
 {
     public interface ISupplierService
     {
         IEnumerable<Supplier> GetSuppliers();
+        IEnumerable<Supplier> GetSuppliers(Expression<Func<Supplier, bool>> where);
         Supplier GetSupplier(int SupplierId);
         void CreateSupplier(Supplier Supplier);
         void UpdateSupplier(Supplier Supplier);
@@ -67,6 +69,13 @@ namespace OfficeSuppliersLinkSoft.Service
         /// </summary>
         /// <returns>List of suppliers</returns>
         public IEnumerable<Supplier> GetSuppliers() => _supplierRepository.GetAll();
+
+        /// <summary>
+        /// Get the list of suppliers based on where expression
+        /// </summary>
+        /// <param name="where">expression</param>
+        /// <returns>List of suppliers</returns>
+        public IEnumerable<Supplier> GetSuppliers(Expression<Func<Supplier, bool>> where) => _supplierRepository.GetMany(where);        
 
         /// <summary>
         /// Mark supplier as remove
