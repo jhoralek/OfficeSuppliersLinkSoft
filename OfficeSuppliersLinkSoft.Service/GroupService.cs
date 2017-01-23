@@ -13,6 +13,7 @@ namespace OfficeSuppliersLinkSoft.Service
         void UpdateGroup(Group group);
         void RemoveGroup(Group group);
         void SaveGroup();
+        void Dispose();
     }
 
     /// <summary>
@@ -83,5 +84,10 @@ namespace OfficeSuppliersLinkSoft.Service
         /// call this method
         /// </summary>
         public void SaveGroup() => _unitOfWork.Commit();
+
+        /// <summary>
+        /// Dispose db context
+        /// </summary>
+        public void Dispose() => _unitOfWork.Dispose();
     }
 }

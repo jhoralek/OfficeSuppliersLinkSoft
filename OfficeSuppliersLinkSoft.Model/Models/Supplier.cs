@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OfficeSuppliersLinkSoft.Model
 {
@@ -8,6 +9,13 @@ namespace OfficeSuppliersLinkSoft.Model
     public class Supplier
     {
         /// <summary>
+        /// Initialize list or groups 
+        /// </summary>
+        public Supplier()
+        {
+            Groups = new HashSet<Group>();
+        }
+        /// <summary>
         /// Primary key
         /// </summary>
         public int SupplierId { get; set; }
@@ -15,6 +23,8 @@ namespace OfficeSuppliersLinkSoft.Model
         /// Supplier's name
         /// Is required
         /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Name is required!")]
+        [MaxLength(50, ErrorMessage = "Maximal length is 50 characters!")]
         public string Name { get; set; }
 
         /// <summary>
@@ -26,7 +36,7 @@ namespace OfficeSuppliersLinkSoft.Model
         /// <summary>
         /// Supplier's email address
         /// Is required and must be valid email address
-        /// </summary>
+        /// </summary>        
         public string EmailAddress { get; set; }
 
         /// <summary>
@@ -38,6 +48,6 @@ namespace OfficeSuppliersLinkSoft.Model
         /// <summary>
         /// Supplier's groups collection
         /// </summary>        
-        public virtual ICollection<Group> SuppliersGroups { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace OfficeSuppliersLinkSoft.Data.Repositories
         /// </summary>
         /// <param name="dbFactory">Initialize DB context</param>
         public GroupRepository(IDbFactory dbFactory) : base(dbFactory) {}
+
     }
 }

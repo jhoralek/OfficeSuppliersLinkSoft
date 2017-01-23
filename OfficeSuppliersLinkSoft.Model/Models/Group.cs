@@ -7,6 +7,14 @@ namespace OfficeSuppliersLinkSoft.Model
     /// </summary>
     public class Group
     {
+
+        /// <summary>
+        /// Initialize collection of suppliers
+        /// </summary>
+        public Group()
+        {
+            Suppliers = new HashSet<Supplier>();
+        }
         /// <summary>
         /// Primary key
         /// </summary>
@@ -21,6 +29,6 @@ namespace OfficeSuppliersLinkSoft.Model
         /// <summary>
         /// Supplier groups collection
         /// </summary>
-        public virtual ICollection<Supplier> GroupSuppliers { get; set; }
+        public virtual ICollection<Supplier> Suppliers { get; set; }
     }
 }

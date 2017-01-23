@@ -1,22 +1,22 @@
-﻿@model IEnumerable<OfficeSuppliersLinkSoft.Web.Models.GroupViewModel>
-
-@{
-    ViewBag.Title = "Groups";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Home Page";
 }
 
-<p></p>
+<div class="jumbotron">
+    <h1>OfficeSuppliers LinkSoft</h1>
+    <p class="lead">App is light weight web site provides office suppliers details for LinkSoft HR department build on ASP.NET MVC.</p>
+    <p><a href="http://www.linksoft.eu/en/" class="btn btn-primary btn-lg">More about LinkSoft &raquo;</a></p>
+</div>
 
-<div class="container">
-    <div class="jumbotron">
-        @foreach (var group in Model)
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    @*@Html.DisplayFor(modelItem => group.Name)*@
-                    @Html.ActionLink("View all" + group.Name, "Index", new { category = group.Name }, new { @class = "pull-right" });
-                </div>
-            </div>
-        }
+<div class="row">
+    <div class="col-md-4">
+        <h2>Groups</h2>
+        <p>Supplier belongs into one or more groups. Here you can manage your own groups.</p>
+        <p>@Html.ActionLink("Manage here »", "Index", "Group", new { area = "" }, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Suppliers list</h2>
+        <p>Listing all office suppliers in system and they can be filterd by groups.</p>
+        <p>@Html.ActionLink("Go to list »", "Index", "Supplier", new { area = "" }, new { @class = "btn btn-default" })</p>        
     </div>
 </div>

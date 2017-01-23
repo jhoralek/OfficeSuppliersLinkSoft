@@ -2,6 +2,7 @@
 using OfficeSuppliersLinkSoft.Data.Repositories;
 using OfficeSuppliersLinkSoft.Model;
 using System.Collections.Generic;
+using System;
 
 namespace OfficeSuppliersLinkSoft.Service
 {
@@ -13,6 +14,7 @@ namespace OfficeSuppliersLinkSoft.Service
         void UpdateSupplier(Supplier Supplier);
         void RemoveSupplier(Supplier Supplier);
         void SaveSupplier();
+        void Dispose();
     }
 
     /// <summary>
@@ -83,5 +85,10 @@ namespace OfficeSuppliersLinkSoft.Service
         /// call this method
         /// </summary>
         public void SaveSupplier() => _unitOfWork.Commit();
+
+        /// <summary>
+        /// Dispose db context
+        /// </summary>
+        public void Dispose() => _unitOfWork.Dispose();        
     }
 }

@@ -32,6 +32,11 @@ namespace OfficeSuppliersLinkSoft.Web.App_Start
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
 
+            // !!! Beware of that the service constructors MUST BE public. 
+            // When you implement from interface they are automaticaly protected
+            // Autofac can not register classes with protected constructors from assembly
+            // !!!
+
             // All repositories from assembly where GroupRepository is
             builder.RegisterAssemblyTypes(typeof(GroupRepository).Assembly)
                 .Where(t => t.Name.EndsWith("Repository"))

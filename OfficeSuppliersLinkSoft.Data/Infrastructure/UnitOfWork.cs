@@ -37,5 +37,10 @@ namespace OfficeSuppliersLinkSoft.Data.Infrastructure
         /// Send command action to the database
         /// </summary>
         public void Commit() => DbContext.Commit();
+
+        /// <summary>
+        /// Dispose db context on my own
+        /// </summary>
+        public void Dispose() => DbContext.Dispose();
     }
 }

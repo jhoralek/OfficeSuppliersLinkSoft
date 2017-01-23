@@ -12,5 +12,9 @@
         /// Do the database work
         /// </summary>
         void Commit();
+        /// <summary>
+        /// Dispose db context
+        /// </summary>
+        void Dispose();
     }
 }

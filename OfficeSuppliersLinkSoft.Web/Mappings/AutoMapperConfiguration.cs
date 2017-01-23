@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using OfficeSuppliersLinkSoft.Model;
-using OfficeSuppliersLinkSoft.Web.Models;
 
 namespace OfficeSuppliersLinkSoft.Web.Mappings
 {
+    /// <summary>
+    /// Auto mapping from domain to view and vise versa
+    /// </summary>
     public class AutoMapperConfiguration
     {
         /// <summary>
@@ -11,8 +12,12 @@ namespace OfficeSuppliersLinkSoft.Web.Mappings
         /// </summary>
         public static void Configure()
         {
-            Mapper.Initialize(x => x.CreateMap<Group, GroupViewModel>());
-            Mapper.Initialize(x => x.CreateMap<Supplier, SupplierViewModel>());
+            // It is possible to create as many profiles you want to
+            Mapper.Initialize(x => 
+            {
+                x.AddProfile<DomainToViewModelMappingProfile>();
+                x.AddProfile<ViewModelToDomainMappingProfile>();
+            });
         }
     }
 }

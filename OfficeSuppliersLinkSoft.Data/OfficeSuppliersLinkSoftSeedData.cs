@@ -1,6 +1,8 @@
 ﻿using OfficeSuppliersLinkSoft.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace OfficeSuppliersLinkSoft.Data
 {
@@ -14,8 +16,13 @@ namespace OfficeSuppliersLinkSoft.Data
         {
             GetGroups().ForEach(g => context.Groups.Add(g));
             GetSuppliers().ForEach(s => context.Suppliers.Add(s));
-            GetSuppliersGroups().ForEach(sg => context.SuppliersGroups.Add(sg));
-
+            context.Commit();
+            
+            context.Suppliers.ToList().ForEach(s => 
+                                        {
+                                            // set some two groups to each supplier
+                                            s.Groups = context.Groups.ToList().OrderBy(g => Guid.NewGuid()).Take(2).ToList();
+                                        });
             context.Commit();
         }
 
@@ -28,7 +35,7 @@ namespace OfficeSuppliersLinkSoft.Data
         };
 
         private static List<Supplier> GetSuppliers() =>  new List<Supplier>
-        {
+        {            
             new Supplier { SupplierId = 1, Name = "Akamai", Address = "State of the Internet Report, Cambridge, MA, USA", EmailAddress = "akamai@akamai.gov", Telephone = 123456789 },
             new Supplier { SupplierId = 2, Name = "GMI Ratings", Address = "New York, USA", EmailAddress = "gmi@gmirating.com", Telephone = 987654321 },
             new Supplier { SupplierId = 3, Name = "Thomson Reuters", Address = "London, UK", EmailAddress = "thomson@thomson.co.uk", Telephone = 147258369 },
@@ -38,19 +45,6 @@ namespace OfficeSuppliersLinkSoft.Data
             new Supplier { SupplierId = 7, Name = "EasyHomeLife", Address = "McKechnie Ave West Vancouver BC V7V 2M5 Canada", EmailAddress = "easyhomelife@eashyhomelife.ca", Telephone = 162925807 },
             new Supplier { SupplierId = 8, Name = "Carvalho's Cleaning", Address = "Egypt", EmailAddress = "carvalhocelaning@carvalhocleaning.com", Telephone = 204906005 },
             new Supplier { SupplierId = 9, Name = "Spaceon (HK) Development Co., Ltd", Address = "Rm2, 18 / F Carnival Comm Bldg. , 18, Java Road, North Point", EmailAddress = "spaceon@spaceon.hk", Telephone = 258741369 },
-        };
-
-        private static List<SuppliersGroup> GetSuppliersGroups() => new List<SuppliersGroup>
-        {
-            new SuppliersGroup { SuppliersGroupId = 1, GroupId = 1, SupplierId = 9 },
-            new SuppliersGroup { SuppliersGroupId = 2, GroupId = 1, SupplierId = 8 },
-            new SuppliersGroup { SuppliersGroupId = 3, GroupId = 3, SupplierId = 7 },
-            new SuppliersGroup { SuppliersGroupId = 4, GroupId = 3, SupplierId = 6 },
-            new SuppliersGroup { SuppliersGroupId = 5, GroupId = 2 , SupplierId = 5 },
-            new SuppliersGroup { SuppliersGroupId = 6, GroupId = 2 , SupplierId = 4 },
-            new SuppliersGroup { SuppliersGroupId = 7, GroupId = 4 , SupplierId = 3 },
-            new SuppliersGroup { SuppliersGroupId = 8, GroupId = 4 , SupplierId = 2 },
-            new SuppliersGroup { SuppliersGroupId = 9, GroupId = 2 , SupplierId = 1 },
-        };
+        };        
     }
 }

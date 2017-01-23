@@ -18,6 +18,7 @@ namespace OfficeSuppliersLinkSoft.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Autofac and Automapper configurations
+            // DI (dependency injection)
             Bootstrapper.Run();
         }
     }
