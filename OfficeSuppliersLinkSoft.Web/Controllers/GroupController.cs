@@ -37,7 +37,6 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         // GET: Group
         public ActionResult Index() => View(ListToViewModel(_groupService.GetGroups()));
         
-
         // GET: Group/Details/5
         public ActionResult Details(int? id)
         {
