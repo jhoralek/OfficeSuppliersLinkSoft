@@ -182,6 +182,7 @@
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDomainMappingProfile.cs" />
+    <Compile Include="Models\AssignedGroupsViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -215,6 +216,8 @@
     <Content Include="Views\Shared\_Partials\NavBar.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SupplierViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\GroupViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SupplierViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GroupViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -224,7 +227,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

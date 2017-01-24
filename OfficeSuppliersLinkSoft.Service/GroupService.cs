@@ -1,13 +1,16 @@
 ﻿using OfficeSuppliersLinkSoft.Data.Infrastructure;
 using OfficeSuppliersLinkSoft.Data.Repositories;
 using OfficeSuppliersLinkSoft.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace OfficeSuppliersLinkSoft.Service
 {
     public interface IGroupService
     {
         IEnumerable<Group> GetGroups();
+        IEnumerable<Group> GetGroups(Expression<Func<Group, bool>> where);
         Group GetGroup(int groupId);
         void CreateGroup(Group group);
         void UpdateGroup(Group group);
@@ -65,7 +68,14 @@ namespace OfficeSuppliersLinkSoft.Service
         /// Method obtains every group in repository
         /// </summary>
         /// <returns>List of groups</returns>
-        public IEnumerable<Group> GetGroups() => _groupRepository.GetAll();        
+        public IEnumerable<Group> GetGroups() => _groupRepository.GetAll();
+
+        /// <summary>
+        /// Get the list of groups based on where expression
+        /// </summary>
+        /// <param name="where">expression</param>
+        /// <returns>List of groups</returns>
+        public IEnumerable<Group> GetGroups(Expression<Func<Group, bool>> where) => _groupRepository.GetMany(where);
 
         /// <summary>
         /// Mark group as remove

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using OfficeSuppliersLinkSoft.Model;
+using OfficeSuppliersLinkSoft.Web.Models;
 
 namespace OfficeSuppliersLinkSoft.Web.Mappings
 {
@@ -17,7 +19,9 @@ namespace OfficeSuppliersLinkSoft.Web.Mappings
         /// </summary>
         protected override void Configure()
         {
-            base.Configure();
+            Mapper.CreateMap<GroupViewModel, Group>();
+            Mapper.CreateMap<SupplierViewModel, Supplier>();
+            Mapper.CreateMap<AssignedGroupsViewModel, Group>();
         }
     }
 }

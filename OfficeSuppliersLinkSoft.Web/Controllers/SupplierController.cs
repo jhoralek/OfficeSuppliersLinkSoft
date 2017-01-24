@@ -6,6 +6,7 @@ using OfficeSuppliersLinkSoft.Service;
 using OfficeSuppliersLinkSoft.Model;
 using AutoMapper;
 using OfficeSuppliersLinkSoft.Web.Mappings;
+using System.Linq;
 
 namespace OfficeSuppliersLinkSoft.Web.Controllers
 {
@@ -26,13 +27,20 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         readonly ISupplierService _supplierService;
 
         /// <summary>
+        /// Interface to the groupService
+        /// </summary>
+        readonly IGroupService _groupService;
+
+        /// <summary>
         /// Initialize SupplierController instance fo every request
         /// Dependency injection fo SupplierService
         /// </summary>
         /// <param name="supplierService">Instance of SupplierService</param>
-        public SupplierController(ISupplierService supplierService)
+        /// <param name="groupService">Instance of GroupService</param>
+        public SupplierController(ISupplierService supplierService, IGroupService groupService)
         {
             _supplierService = supplierService;
+            _groupService = groupService;
         }
 
         // GET: Supplier
@@ -54,18 +62,25 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         }
 
         // GET: Supplier/Create
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            ViewBag.AllGroups = PopulateAssignedGroups(Mapper.Map<Supplier, SupplierViewModel>(null));
+            return View();
+        }
 
         // POST: Supplier/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SupplierId,Name,Address,EmailAddress,Telephone")] SupplierViewModel supplierViewModel)
+        public ActionResult Create([Bind(Include = "SupplierId,Name,Address,EmailAddress,selectedGroups,Telephone")] SupplierViewModel supplierViewModel, int[] selectedGroups)
         {
             if (ModelState.IsValid)
             {
-                _supplierService.CreateSupplier(ToDomain(supplierViewModel));
+                _supplierService.CreateOrUpdateSuppliersGroups(
+                    ToDomain(supplierViewModel),
+                    _groupService.GetGroups(g => selectedGroups.Contains(g.GroupId)));
+
                 _supplierService.SaveSupplier();
 
                 return RedirectToAction("Index");
@@ -83,26 +98,35 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var supplierViewModel = _supplierService.GetSupplier(id.Value);
+
+            ViewBag.AllGroups = PopulateAssignedGroups(Mapper.Map<Supplier, SupplierViewModel>(supplierViewModel));
             if (supplierViewModel == null)
                 return HttpNotFound();
 
             return View(supplierViewModel);
-        }
+        }       
 
         // POST: Supplier/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SupplierId,Name,Address,EmailAddress,Telephone")] SupplierViewModel supplierViewModel)
+        public ActionResult Edit([Bind(Include = "SupplierId,Name,Address,EmailAddress,Telephone,Groups,selectedGroups")] SupplierViewModel supplierViewModel, int[] selectedGroups)
         {
             if (ModelState.IsValid)
             {
-                _supplierService.UpdateSupplier(ToDomain(supplierViewModel));
-                _supplierService.SaveSupplier();
+                selectedGroups = selectedGroups != null ? selectedGroups : new int[] { };
+                // pass logic to the service. That is the right place for this operation
+                var supplier = _supplierService.GetSupplier(supplierViewModel.SupplierId);
+                if (TryUpdateModel(supplier, "", new string[] { "Name", "Address", "EmailAddress", "Telephone" }))
+                {
+                    _supplierService.CreateOrUpdateSuppliersGroups(supplier, _groupService.GetGroups(g => selectedGroups.Contains(g.GroupId)));
+                    _supplierService.SaveSupplier();
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
             }
+
             return View(supplierViewModel);
         }
 
@@ -147,5 +171,28 @@ namespace OfficeSuppliersLinkSoft.Web.Controllers
         /// <param name="gvm">SupplierViewModel object</param>
         /// <returns>Supplier object</returns>
         Supplier ToDomain(SupplierViewModel gvm) => Mapper.Map<SupplierViewModel, Supplier>(gvm);
+
+        /// <summary>
+        /// Populate all groups to the edit or create profile of the
+        /// supplier. 
+        /// Assigne those groups in which supplier already belongs
+        /// </summary>
+        /// <param name="supplier">Supplier instance</param>
+        List<AssignedGroupsViewModel> PopulateAssignedGroups(SupplierViewModel supplier)
+        {
+            var groups = _groupService.GetGroups();
+            var suppliersGroups = supplier == null ? new HashSet<int>() : new HashSet<int>(supplier.Groups.Select(g => g.GroupId));
+
+            var viewModel = new List<AssignedGroupsViewModel>();
+            // loop all groups and create list of AssignedGroupsViewModel
+            groups.Each(group => viewModel.Add(new AssignedGroupsViewModel
+            {
+                GroupId = group.GroupId,
+                Name = group.Name,
+                Assigned = suppliersGroups.Contains(group.GroupId) // assign those where current supplier belongs
+            }));
+
+            return viewModel;
+        }
     }
 }

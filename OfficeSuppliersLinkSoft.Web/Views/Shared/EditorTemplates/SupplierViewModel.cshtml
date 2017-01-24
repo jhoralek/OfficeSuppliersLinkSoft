@@ -1,0 +1,70 @@
+﻿@model OfficeSuppliersLinkSoft.Web.Models.SupplierViewModel
+
+<div class="form-horizontal">
+    <h4>SupplierViewModel</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Telephone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Groups, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                // need to assign to the strongly type List because ViewBag is only object
+                List<OfficeSuppliersLinkSoft.Web.Models.AssignedGroupsViewModel> allGroups = ViewBag.AllGroups;
+                foreach (var group in allGroups)
+                {
+                    <input type="checkbox" name="selectedGroups" value="@group.GroupId" @(Html.Raw(group.Assigned ? "checked=\"checked\"" : "")) class="checkbox checkbox-inline" />
+                    @group.Name
+                }
+            }
+        </div>
+    </div>
+    @{
+        var suppliersGroups = Model.Groups.ToList();
+        if (Model != null && Model.Groups != null)
+        {
+            for (int i = 0; i < suppliersGroups.Count; i++)
+            {
+                @Html.HiddenFor(model => suppliersGroups[i].GroupId)
+                @Html.HiddenFor(model => suppliersGroups[i].Name)
+            }
+        }
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="@ViewBag.Title" class="btn btn-default" />
+        </div>
+    </div>
+</div>

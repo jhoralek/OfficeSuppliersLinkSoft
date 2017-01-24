@@ -20,10 +20,8 @@ namespace OfficeSuppliersLinkSoft.Web.Mappings
         protected override void Configure()
         {
             Mapper.CreateMap<Group, GroupViewModel>();
-            Mapper.CreateMap<GroupViewModel, Group>();
-
             Mapper.CreateMap<Supplier, SupplierViewModel>();
-            Mapper.CreateMap<SupplierViewModel, Supplier>();
+            Mapper.CreateMap<Group, AssignedGroupsViewModel>();
         }
     }
 }

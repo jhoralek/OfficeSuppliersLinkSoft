@@ -4,6 +4,7 @@ using OfficeSuppliersLinkSoft.Model;
 using System.Collections.Generic;
 using System;
 using System.Linq.Expressions;
+using System.Linq;
 
 namespace OfficeSuppliersLinkSoft.Service
 {
@@ -11,12 +12,13 @@ namespace OfficeSuppliersLinkSoft.Service
     {
         IEnumerable<Supplier> GetSuppliers();
         IEnumerable<Supplier> GetSuppliers(Expression<Func<Supplier, bool>> where);
-        Supplier GetSupplier(int SupplierId);
-        void CreateSupplier(Supplier Supplier);
-        void UpdateSupplier(Supplier Supplier);
-        void RemoveSupplier(Supplier Supplier);
+        Supplier GetSupplier(int supplierId);
+        void CreateSupplier(Supplier supplier);
+        void UpdateSupplier(Supplier supplier);
+        void RemoveSupplier(Supplier supplier);
         void SaveSupplier();
         void Dispose();
+        void CreateOrUpdateSuppliersGroups(Supplier supplier, IEnumerable<Group> selectedGrups);
     }
 
     /// <summary>
@@ -34,7 +36,6 @@ namespace OfficeSuppliersLinkSoft.Service
         /// We use this interface for access to the Supplier's repo.
         /// </summary>
         ISupplierRepository _supplierRepository;
-
         /// <summary>
         /// Execute DB commands
         /// </summary>
@@ -47,8 +48,8 @@ namespace OfficeSuppliersLinkSoft.Service
         /// <param name="unitOfWork">Unit of work instance for data command execution</param>
         public SupplierService(ISupplierRepository supplierRepository, IUnitOfWork unitOfWork)
         {
-            this._supplierRepository = supplierRepository;
-            this._unitOfWork = unitOfWork;
+            _supplierRepository = supplierRepository;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -98,6 +99,25 @@ namespace OfficeSuppliersLinkSoft.Service
         /// <summary>
         /// Dispose db context
         /// </summary>
-        public void Dispose() => _unitOfWork.Dispose();        
+        public void Dispose() => _unitOfWork.Dispose();
+
+        /// <summary>
+        /// Update suppliers group based on selection
+        /// </summary>
+        /// <param name="supplier">Current supplier</param>
+        /// <param name="selectedGroups">selected groups</param>
+        public void CreateOrUpdateSuppliersGroups(Supplier supplier, IEnumerable<Group> selectedGroups)
+        {
+            // manipulate with Supplier's groups
+            supplier.Groups.ToList().ForEach(group => supplier.Groups.Remove(group));
+            selectedGroups.ToList().ForEach(group => supplier.Groups.Add(group));
+
+            // create or update supplier
+            if (supplier.SupplierId <= 0)
+                _supplierRepository.Add(supplier);            
+            else
+                _supplierRepository.Update(supplier);
+
+        }
     }
 }
