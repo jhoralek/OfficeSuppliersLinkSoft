@@ -22,7 +22,6 @@ namespace OfficeSuppliersLinkSoft.Tests
         /// Test if Index() retrives DefaultView without any ModelView
         /// </summary>
         [TestMethod]
-        [TestCategory("Controllers")]
         public void Index()
         {
             _controller.WithCallTo(h => h.Index()).ShouldRenderDefaultView();

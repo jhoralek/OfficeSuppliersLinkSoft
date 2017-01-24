@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Web", "..\OfficeSuppliersLinkSoft.Web\OfficeSuppliersLinkSoft.Web.csproj", "{BA632233-C248-48EB-95D0-B2BCCA075BDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Test", "..\OfficeSuppliersLinkSoft.Test\OfficeSuppliersLinkSoft.Test.csproj", "{F647BC11-6BDD-4649-B08A-39BF1332BDBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BA632233-C248-48EB-95D0-B2BCCA075BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA632233-C248-48EB-95D0-B2BCCA075BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA632233-C248-48EB-95D0-B2BCCA075BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F647BC11-6BDD-4649-B08A-39BF1332BDBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F647BC11-6BDD-4649-B08A-39BF1332BDBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F647BC11-6BDD-4649-B08A-39BF1332BDBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F647BC11-6BDD-4649-B08A-39BF1332BDBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
