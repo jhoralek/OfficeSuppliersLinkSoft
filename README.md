@@ -11,8 +11,8 @@ These instructions will get you a copy of the project up and running on your loc
 For smooth launch OfficeSuppliersLinkSoft application you need to this software installed
 
 ```
-* [Microsoft Visual Studio 2015] (https://www.microsoft.com/en-us/download/details.aspx?id=48146) - .NET development environment
-* [Microsoft MSSQL Express 2016 or higher] (https://www.microsoft.com/en-sa/sql-server/sql-server-downloads) - SQL engine
+* [Microsoft Visual Studio 2015] (https://www.microsoft.com/en-us/download/details.aspx?id=48146/) - .NET development environment
+* [Microsoft MSSQL Express 2016 or higher] (https://www.microsoft.com/en-sa/sql-server/sql-server-downloads/) - SQL engine
 ```
 
 ### Installing
@@ -49,16 +49,33 @@ Web.config connection string is used for app itself
 
 **Start it**
 
+## Technology and Practices used
+
+* Technology
+  * ASP.NET MVC 5 Razor
+  * Entity Framework 6
+
+* Patterns
+  * [Repository pattern] (https://msdn.microsoft.com/en-us/library/ff649690.aspx/)
+  * [Unit Of Work] (https://www.codeproject.com/Articles/581487/Unit-of-Work-Design-Pattern/)
+  
+* Extensions
+  * [AutoMapper] (http://automapper.org/) - mapping Models to ViewModels
+  * [AutoFac] (https://autofac.org/) - for Dependency Injection
+  * [FluentMvcTest] (https://github.com/TestStack/TestStack.FluentMVCTesting/) - Unit testing
+  * [Bootstrap] (http://getbootstrap.com/) - Web layout
+
+
 ## Testing
 
 I used only unit test as a suffitient solution. I chose FluentMvcTesting framework which provides a small an reliable interface for creating type-safe test againts MVC controllers
 
-[FluentMvcTesting] (https://github.com/TestStack/TestStack.FluentMVCTesting) - small fluent ASP.Net MVC testing framework
+[FluentMvcTesting] (https://github.com/TestStack/TestStack.FluentMVCTesting/) - small fluent ASP.Net MVC testing framework
 
 I used it for my first time. It can be extended with usual Asserts as require
 
 
-```
+```csharp
   [TestMethod]
   public void Index()
   {
