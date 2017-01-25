@@ -10,10 +10,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 For smooth launch OfficeSuppliersLinkSoft application you need to this software installed
 
-```
 * [Microsoft Visual Studio 2015] (https://www.microsoft.com/en-us/download/details.aspx?id=48146/) - .NET development environment
 * [Microsoft MSSQL Express 2016 or higher] (https://www.microsoft.com/en-sa/sql-server/sql-server-downloads/) - SQL engine
-```
 
 ### Installing
 
@@ -85,7 +83,7 @@ I used it for my first time. It can be extended with usual Asserts as require
   }
    ```     
    
- ## Versioning
+## Versioning
    
 I use [Git] (https://git-scm.com/) for versioning
 
