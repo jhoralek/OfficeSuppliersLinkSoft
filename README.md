@@ -39,7 +39,9 @@ You need to set **connection string** to the database in
 **App.config** in **OfficeSuppliersLinkSoft.Data**
 
 ```
-<add name="OfficeSuppliersEntities" connectionString="Data Source=YOURS_DATABASE_ENGINE;Initial Catalog=OfficeSupplier;Integrated Security=SSPI;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient"/>
+<add name="OfficeSuppliersEntities" 
+     connectionString="Data Source=YOURS_DATABASE_ENGINE;Initial Catalog=OfficeSupplier;Integrated Security=SSPI;MultipleActiveResultSets=True;App=EntityFramework" 
+     providerName="System.Data.SqlClient"/>
 ```
 
 Connection string in App.config is used for Code First database generation and Data Seeds initialization
