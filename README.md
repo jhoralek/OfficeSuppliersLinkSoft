@@ -64,6 +64,7 @@ Web.config connection string is used for app itself
   * [AutoFac] (https://autofac.org/) - for Dependency Injection
   * [FluentMvcTest] (https://github.com/TestStack/TestStack.FluentMVCTesting/) - Unit testing
   * [Bootstrap] (http://getbootstrap.com/) - Web layout
+  * [MOQ] (https://www.nuget.org/packages/Moq/4.6.38-alpha/) - Mock controllers, services, context etc.
 
 
 ## Testing
