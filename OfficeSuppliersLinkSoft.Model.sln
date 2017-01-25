@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Model", "OfficeSuppliersLinkSoft.Model.csproj", "{ABE0E0F8-43CC-4CDC-AE98-EE574D2022DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Model", "OfficeSuppliersLinkSoft.Model\OfficeSuppliersLinkSoft.Model.csproj", "{ABE0E0F8-43CC-4CDC-AE98-EE574D2022DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Data", "..\OfficeSuppliersLinkSoft.Data\OfficeSuppliersLinkSoft.Data.csproj", "{202F5335-6F99-4FF5-A821-AF61A85794FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Data", "OfficeSuppliersLinkSoft.Data\OfficeSuppliersLinkSoft.Data.csproj", "{202F5335-6F99-4FF5-A821-AF61A85794FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Service", "..\OfficeSuppliersLinkSoft.Service\OfficeSuppliersLinkSoft.Service.csproj", "{706EF57C-5A66-46C7-BD77-F571D5D9379B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Service", "OfficeSuppliersLinkSoft.Service\OfficeSuppliersLinkSoft.Service.csproj", "{706EF57C-5A66-46C7-BD77-F571D5D9379B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Web", "..\OfficeSuppliersLinkSoft.Web\OfficeSuppliersLinkSoft.Web.csproj", "{BA632233-C248-48EB-95D0-B2BCCA075BDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Web", "OfficeSuppliersLinkSoft.Web\OfficeSuppliersLinkSoft.Web.csproj", "{BA632233-C248-48EB-95D0-B2BCCA075BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Test", "..\OfficeSuppliersLinkSoft.Test\OfficeSuppliersLinkSoft.Test.csproj", "{F647BC11-6BDD-4649-B08A-39BF1332BDBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeSuppliersLinkSoft.Test", "OfficeSuppliersLinkSoft.Test\OfficeSuppliersLinkSoft.Test.csproj", "{F647BC11-6BDD-4649-B08A-39BF1332BDBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
