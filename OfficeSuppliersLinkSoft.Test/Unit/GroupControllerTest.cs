@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestStack.FluentMVCTesting;
 
-namespace OfficeSuppliersLinkSoft.Tests
+namespace OfficeSuppliersLinkSoft.Test.Unit
 {
     /// <summary>
     /// Testing Grup controller functions
@@ -46,19 +46,22 @@ namespace OfficeSuppliersLinkSoft.Tests
         }
 
         /// <summary>
-        /// Test calling Index View with correct model
+        /// Test controller's View rendering of Index()
+        /// and testing group's service GetGroups() method
+        /// Should return non zero result in ViewModel
         /// </summary>
         [TestMethod]
         public void Index()
         {
             _controller.WithCallTo(g => g.Index())
                 .ShouldRenderDefaultView()
-                .WithModel<IEnumerable<Group>>();
+                .WithModel<IEnumerable<Group>>(g => g.Count() > 0);
         }
 
         /// <summary>
-        /// Retrive instance of Group Model with
-        /// Name "Test"
+        /// Testing controller's View rendering of Details()
+        /// and we are  looking for group with GroupId == 1
+        /// This group should be loaded to the ViewModel
         /// </summary>
         [TestMethod]
         public void Details()
@@ -68,6 +71,9 @@ namespace OfficeSuppliersLinkSoft.Tests
                 .WithModel<Group>(g => g == _groups.First(x => x.GroupId == 1));
         }
 
+        /// <summary>
+        /// Testing controller's View rendering of Create()
+        /// </summary>
         [TestMethod]
         public void CreateHttpGet()
         {
@@ -75,6 +81,11 @@ namespace OfficeSuppliersLinkSoft.Tests
                 .ShouldRenderDefaultView();
         }
 
+        /// <summary>
+        /// Testing controller's View rendering of Edit(int? id)
+        /// and this method should load group with GroupId == 1
+        /// This Model should be loaded to the Edit(int? id)
+        /// </summary>
         [TestMethod]
         public void EditHttpGet()
         {
@@ -83,6 +94,11 @@ namespace OfficeSuppliersLinkSoft.Tests
                 .WithModel<Group>(g => g == _groups.First(x => x.GroupId == 1));
         }
 
+        /// <summary>
+        /// Testing controller's View rendering of Delete(int? id)
+        /// and this method sould load group with GroupId == 1
+        /// This Model should be loaded to the Delete(int? id)
+        /// </summary>
         [TestMethod]
         public void DeleteHttpGet()
         {
@@ -91,30 +107,45 @@ namespace OfficeSuppliersLinkSoft.Tests
                 .WithModel<Group>(g => g == _groups.First(x => x.GroupId == 1));
         }
 
+        /// <summary>
+        /// Testing adding new Group to the group's collection
+        /// and redirecting to the Index() view
+        /// </summary>
         [TestMethod]
         public void CreateHttpPost()
         {
-            _controller.WithCallTo(g => g.Create(new GroupViewModel { GroupId = 2, Name = "Test 2" }))
+            _controller.WithCallTo(g => g
+                .Create(new GroupViewModel { GroupId = 2, Name = "Test 2" }))
                 .ShouldRedirectTo(g => g.Index());
-
         }
 
+        /// <summary>
+        /// Testing mark Group as edited
+        /// and redirecting to the Index() view
+        /// </summary>
         [TestMethod]
         public void EditHttpPost()
         {
-            _controller.WithCallTo(g => g.Edit(new GroupViewModel { GroupId = 2, Name = "Test 2" }))
+            _controller.WithCallTo(g => g
+                .Edit(new GroupViewModel { GroupId = 2, Name = "Test 2" }))
                 .ShouldRedirectTo(g => g.Index());
-
         }
 
+        /// <summary>
+        /// Testing mark group as deleted
+        /// and redirecting to the Index() view
+        /// </summary>
         [TestMethod]
         public void DeleteHttpPost()
         {
-            _controller.WithCallTo(g => g.DeleteConfirmed(new GroupViewModel { GroupId = 2, Name = "Test 2" }))
+            _controller.WithCallTo(g => g
+                .DeleteConfirmed(new GroupViewModel { GroupId = 2, Name = "Test 2" }))
                 .ShouldRedirectTo(g => g.Index());
-
         }
 
+        /// <summary>
+        /// Clean when every test is finished
+        /// </summary>
         [TestCleanup]
         public void Cleanup()
         {

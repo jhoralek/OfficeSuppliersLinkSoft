@@ -2,7 +2,7 @@
 using OfficeSuppliersLinkSoft.Web.Controllers;
 using TestStack.FluentMVCTesting;
 
-namespace OfficeSuppliersLinkSoft.Tests
+namespace OfficeSuppliersLinkSoft.Test.Unit
 {
     [TestClass]
     public class HomeControllerTest
